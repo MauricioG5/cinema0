@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const config = require('../config/config')
+const { config } = require('../config/config')
 
 const user = encodeURIComponent(config.dbUser);
 const pass = encodeURIComponent(config.dbPassword);
@@ -9,8 +9,7 @@ const dbName = config.dbName;
 
 const URI = `postgres://${user}:${pass}@${host}:${port}/${dbName}`;
 
-const sequelize = new Sequelize(URI, 
-    {
+const sequelize = new Sequelize(URI, {
         dialect: 'postgres',
         logging: false
     });

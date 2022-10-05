@@ -1,9 +1,7 @@
-const dotEnv = require('dotenv');
+require('dotenv').config();
 
-dotEnv.config();
-
-module.exports = {
-    env: process.env.env || 'dev',
+const config = {
+    env: process.env.NODE_ENV || 'dev',
     port: process.env.PORT || 3000,
     dbName: process.env.DB_NAME,
     dbUser: process.env.DB_USER,
@@ -11,3 +9,5 @@ module.exports = {
     dbHost: process.env.DB_HOST,
     dbPort: process.env.DB_PORT
 }
+
+module.exports = { config }
