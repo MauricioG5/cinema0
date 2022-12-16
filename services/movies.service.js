@@ -1,4 +1,5 @@
-const sequelize = require('sequelize')
+const boom = require('@hapi/boom');
+const { models } = require('./../libs/sequelize');
 
 
 class movieService {
@@ -7,33 +8,36 @@ class movieService {
 
     }
 
-    generate() {
-
+    async list() {
+        const movieList = await models.Movie.findAll();
+        return movieList;
     }
 
     async create(data) {
-        return { rta: 'created', data }
+        const movie = await models.Movie.create(data);
+        return movie;
+        // return { rta: 'created', data }
     }
 
-    async update(id, changes) {
-        return {
-            rta: 'updated',
-            id,
-            changes
-        }
+    async update(id, data) {
+        const movie = await this.findOne(id);
+        const updatedMovie = await movie.update(data);
+        return updatedMovie;
 
-    }
-
-    async list() {
-        return { rta: 'lista' }
     }
 
     async findOne(id) {
-        return {id, name: 'unaPelicula'}
+        const movie = await models.Movie.findByPk(id);
+        if(!movie){
+            throw new boom.notFound('Movie not Found');
+        }
+        return movie;
     }
 
     async delete(id) {
-        return {id, done: true}
+        const movie = await this.findOne(id);
+        movie.destroy();
+        return id;
     }
 
 }

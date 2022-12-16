@@ -25,7 +25,7 @@ router.post('/',
         } catch (e) {
             next(e);
         }
-    });
+    }); 
 
     router.patch('/:id',
     validationHandler(getMovieSchema, 'params'),

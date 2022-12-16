@@ -1,13 +1,13 @@
-const { DataTypes, Model } = require('sequelize');
+const { DataTypes, Model, Sequelize } = require('sequelize');
 
 const MOVIE_TABLE = 'movies';
 
-const movieSchema = {
+const MovieSchema = {
     id: {
-        allowNull: false,
+        // allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         unique: true,
     },
     name: {
@@ -15,17 +15,34 @@ const movieSchema = {
         allowNull: false,
         unique: true
     },
-    year: {
-        type: DataTypes.NUMBER,
+    img: {
+        type: DataTypes.STRING,
         allowNull: true,
+        unique: false,
+    },
+    releaseYear: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'release-year'
+    },
+    categoryId: {
+        allowNull: true,
+        type: DataTypes.INTEGER,
+        field: 'category-id'
     }
-}
+};
 
 class Movie extends Model{
     static associate() {
-    }
-    static config() {
+    };
+    static config(sequelize) {
+       return {
+            sequelize,
+            tableName: MOVIE_TABLE,
+            modelName: 'Movie',
+            timestamps: false
+        }
     }
 }
 
-module.exports = { Movie, movieSchema, MOVIE_TABLE }
+module.exports = { Movie, MovieSchema, MOVIE_TABLE }
