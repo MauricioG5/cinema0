@@ -16,7 +16,6 @@ class movieService {
     async create(data) {
         const movie = await models.Movie.create(data);
         return movie;
-        // return { rta: 'created', data }
     }
 
     async update(id, data) {

@@ -1,7 +1,6 @@
 const { ValidationError } = require('sequelize');
 
 function errorLogger (error, req, res, next){
-    // console.log(error.message)
     next(error);
 }
 function boomErrorHandler (error, req, res, next){

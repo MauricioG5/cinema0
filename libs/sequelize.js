@@ -13,7 +13,7 @@ const URI = `postgres://${user}:${pass}@${host}:${port}/${dbName}`;
 const sequelize = new Sequelize(URI, {
         dialect: 'postgres',
         logging: false
-    });
+        });
 
 setupModels(sequelize);
 
