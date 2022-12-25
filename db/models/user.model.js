@@ -22,6 +22,11 @@ const UserSchema = {
         type: DataTypes.STRING,
         allowNull: false
     },
+    role: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: 'user'
+    },
     img: {
         type: DataTypes.STRING,
         allowNull: true
