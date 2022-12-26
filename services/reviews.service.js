@@ -1,7 +1,7 @@
 const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
 
-class reviewsService {
+class ReviewService {
 
     constructor(){}
 
@@ -36,4 +36,4 @@ class reviewsService {
     }
 }
 
-module.exports = reviewsService;
+module.exports = ReviewService;

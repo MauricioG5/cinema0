@@ -11,7 +11,7 @@ const ReviewSchema = {
     },
     userId: {
         type: DataTypes.INTEGER,
-        field: 'user-id',
+        field: 'user_id',
         allowNull: false
     },
     score: {

@@ -1,10 +1,10 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
 const { createReviewSchema, getReviewSchema, updateReviewSchema } = require('../schemas/review.schema')
-const ReviewsService = require('../services/reviews.service')
+const ReviewService = require('../services/reviews.service')
 
 const router = express.Router();
-const service = new ReviewsService();
+const service = new ReviewService();
 
 router.get('/', async (req, res, next) => {
     try {

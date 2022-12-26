@@ -4,7 +4,6 @@ const MOVIE_TABLE = 'movies';
 
 const MovieSchema = {
     id: {
-        // allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER,
@@ -23,12 +22,12 @@ const MovieSchema = {
     releaseYear: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'release-year'
+        field: 'release_year'
     },
     categoryId: {
         allowNull: true,
         type: DataTypes.INTEGER,
-        field: 'category-id'
+        field: 'category_id'
     }
 };
 

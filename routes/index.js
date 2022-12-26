@@ -3,6 +3,7 @@ const moviesRouter = require('./movies.router');
 const categoriesRouter = require('./categories.router');
 const usersRouter = require('./users.router');
 const reviewsRouter = require('./reviews.router');
+const directorsRouter = require('./directors.router');
 
 function appRouter(app){
     const router = express.Router();
@@ -11,6 +12,7 @@ function appRouter(app){
     router.use('/categories', categoriesRouter);
     router.use('/users', usersRouter);
     router.use('/reviews', reviewsRouter);
+    router.use('/directors', directorsRouter);
 }
 
 module.exports = appRouter;
