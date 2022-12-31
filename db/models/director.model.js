@@ -27,7 +27,12 @@ const DirectorSchema = {
 
 class Director extends Model{
 
-    static associate(){};
+    static associate(models){
+        this.hasMany(models.Movie, {
+            as: 'movies',
+            foreignKey: 'directorId'
+        })
+    };
 
     static config(sequelize){
         return {

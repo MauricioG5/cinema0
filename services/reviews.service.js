@@ -11,7 +11,7 @@ class ReviewService {
     }
 
     async findOne(id){
-        const review = await models.Review.findByPk(id);
+        const review = await models.Review.findByPk(id, { include: ['user', 'movie'] });
         if(!review){
             throw new boom.notFound('Review not found');
         }

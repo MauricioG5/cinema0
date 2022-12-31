@@ -35,7 +35,12 @@ const UserSchema = {
 
 class User extends Model{
 
-    static associate(){};
+    static associate(models){
+        this.hasMany(models.Review, {
+            as: 'reviews',
+            foreignKey: 'userId'
+        })
+    };
 
     static config(sequelize){
         return {

@@ -5,11 +5,13 @@ services:
       container_name: pg_container
       image: postgres:13
       environment:
-        - POSTGRES_USER=dbuser
+        - POSTGRES_USER=dbUser
         - POSTGRES_PASSWORD=123
         - POSTGRES_DB=cinema0
       ports:
         - 5432:5432
+      volumes:
+       - './postgres_data:/var/lib/postgresql/data'
 
 
     pgadmin:

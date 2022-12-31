@@ -12,7 +12,9 @@ class UserService {
     }
 
     async findOne(id) {
-        const found = await models.User.findByPk(id);
+        const found = await models.User.findByPk(id, {
+            include: 'reviews'
+        });
         if (!found) {
             throw new boom.notFound('User not found')
         }

@@ -1,4 +1,6 @@
 const { DataTypes, Model, Sequelize} = require('sequelize');
+const { USER_TABLE } = require("./user.model");
+const { MOVIE_TABLE } = require("./movie.model");
 
 REVIEW_TABLE = 'reviews';
 
@@ -12,8 +14,25 @@ const ReviewSchema = {
     userId: {
         type: DataTypes.INTEGER,
         field: 'user_id',
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: USER_TABLE,
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
     },
+    movieId: {
+        allowNull:false,
+        type: DataTypes.INTEGER,
+        field: 'movie_id',
+        references: {
+            model: MOVIE_TABLE,
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+        },
     score: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -25,7 +44,10 @@ const ReviewSchema = {
 }
 
 class Review extends Model {
-    static associate(){}
+    static associate(models){
+        this.belongsTo(models.User,  { as: 'user' });
+        this.belongsTo(models.Movie, { as: 'movie'});
+    }
 
     static config(sequelize){
         return {
