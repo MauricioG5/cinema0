@@ -8,12 +8,15 @@ const releaseYear = Joi.number().integer().min(1895).max(2022);
 const categoryId = Joi.number().integer().min(0);
 const directorId = Joi.number().integer().min(0);
 const sinopsis = Joi.string().min(30).max(500);
+const movieId = Joi.number().integer();
+const actorId = Joi.number().integer();
+const characterName = Joi.string().min(3).max(25);
 
 const createMovieSchema = Joi.object({
     name: name.required(),
     img: img.required(),
-    minAge,
     releaseYear: releaseYear.required(),
+    minAge,
     categoryId,
     directorId,
     sinopsis
@@ -31,7 +34,18 @@ const updateMovieSchema = Joi.object({
     categoryId,
     directorId,
     sinopsis
-})
+});
+
+const addActorSchema = Joi.object({
+    movieId: movieId.required(),
+    actorId: actorId.required(),
+    characterName: characterName.required()
+});
+const removeActorSchema = Joi.object({
+    movieId: movieId.required(),
+    actorId: actorId.required(),
+    characterName: characterName
+});
 
 
-module.exports = { createMovieSchema, getMovieSchema, updateMovieSchema }
+module.exports = { createMovieSchema, getMovieSchema, updateMovieSchema, addActorSchema, removeActorSchema }

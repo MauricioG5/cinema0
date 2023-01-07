@@ -22,7 +22,6 @@ function setUpModels(sequelize){
     Director.associate(sequelize.models);
     Actor.associate(sequelize.models);
     Movie.associate(sequelize.models);
-    Distribution.associate(sequelize.models);
     Review.associate(sequelize.models);
     User.associate(sequelize.models);
 } 

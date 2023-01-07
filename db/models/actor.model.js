@@ -31,7 +31,7 @@ class Actor extends Model {
         return {
             sequelize,
             modelName: 'Actor',
-            tableName: 'actors',
+            tableName: ACTOR_TABLE,
             timestamps: false
         }
     }

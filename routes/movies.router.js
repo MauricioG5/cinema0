@@ -1,6 +1,6 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
-const { createMovieSchema, getMovieSchema, updateMovieSchema } = require('../schemas/movie.schema')
+const { createMovieSchema, getMovieSchema, updateMovieSchema, addActorSchema, removeActorSchema } = require('../schemas/movie.schema')
 const MovieService = require('../services/movies.service')
 
 const router = express.Router();
@@ -26,6 +26,30 @@ router.post('/',
             next(e);
         }
     }); 
+
+    router.post('/add-actor',
+    validationHandler(addActorSchema, 'body'),
+    async (req, res, next) => {
+        const data = req.body;
+        try {
+            const rta = await service.addActor(data);
+            res.status(201).json(rta);
+        } catch (e) {
+            next(e);
+        }
+    }); 
+
+    router.delete('/remove-actor',
+    validationHandler(removeActorSchema, 'body'),
+    async (req, res, next) => {
+        const data = req.body;
+        try {
+            const rta = await service.removeActor(data);
+            res.status(200).json(rta);
+        } catch (e) {
+            next(e);
+        }
+    });
 
     router.patch('/:id',
     validationHandler(getMovieSchema, 'params'),

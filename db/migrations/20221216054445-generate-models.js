@@ -45,11 +45,11 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    await queryInterface.dropTable(ACTOR_TABLE);
-    await queryInterface.dropTable(REVIEW_TABLE);
-    await queryInterface.dropTable(USER_TABLE);
-    await queryInterface.dropTable(MOVIE_TABLE);
     await queryInterface.dropTable(DISTRIBUTION_TABLE);
+    await queryInterface.dropTable(REVIEW_TABLE);
+    await queryInterface.dropTable(ACTOR_TABLE);
+    await queryInterface.dropTable(MOVIE_TABLE);
+    await queryInterface.dropTable(USER_TABLE);
     await queryInterface.dropTable(CATEGORY_TABLE);
     await queryInterface.dropTable(DIRECTOR_TABLE);
   }

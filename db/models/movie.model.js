@@ -26,6 +26,15 @@ const MovieSchema = {
         allowNull: true,
         field: 'release_year'
     },
+    minAge: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'min_age'
+    },
+    sinopsis: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
     categoryId: {
         allowNull: true,
         type: DataTypes.INTEGER,
@@ -52,12 +61,18 @@ const MovieSchema = {
 
 class Movie extends Model {
     static associate(models) {
-            this.belongsTo(models.Category, {as: 'category'})
-            this.belongsTo(models.Director, {as: 'director'})
-            this.hasMany(models.Review, { 
-                as: 'reviews',
-                foreignKey: 'movieId'
-            })
+        this.belongsTo(models.Category, {as: 'category'});
+        this.belongsTo(models.Director, {as: 'director'});
+        this.hasMany(models.Review, { 
+            as: 'reviews',
+            foreignKey: 'movieId'
+        });
+        this.belongsToMany(models.Actor, {
+            as: 'actors',
+            through: models.Distribution,
+            foreignKey: 'movieId',
+            otherKey: 'actorId'
+        });
     };
     static config(sequelize) {
         return {

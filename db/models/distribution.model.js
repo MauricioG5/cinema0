@@ -15,31 +15,34 @@ const DistributionSchema = {
         type: DataTypes.INTEGER,
         field: 'actor_id',
         allowNull: false,
-        // references: {
-        //     model: ACTOR_TABLE,
-        //     key: 'id'
-        // },
-        // onUpdate: 'CASCADE',
-        // onDelete: 'SET NULL'
+        references: {
+            model: ACTOR_TABLE,
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
     },
     movieId: {
         allowNull:false,
         type: DataTypes.INTEGER,
         field: 'movie_id',
-        // references: {
-        //     model: MOVIE_TABLE,
-        //     key: 'id'
-        // },
-        // onUpdate: 'CASCADE',
-        // onDelete: 'SET NULL'
-        }
+        references: {
+            model: MOVIE_TABLE,
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+        },
+    characterName: {
+        allowNull: false,
+        field: 'character_name',
+        type: DataTypes.STRING
+    }
 }
 
 class Distribution extends Model {
     static associate(models){
-        // this.belongsTo(models.User,  { as: 'user' });
-        // this.belongsTo(models.Movie, { as: 'movie'});
-    }
+        }
 
     static config(sequelize){
         return {
