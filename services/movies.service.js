@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
-const { QueryTypes, Op } = require('sequelize');
+const { Op } = require('sequelize');
 
 class MovieService {
 
@@ -9,7 +9,7 @@ class MovieService {
     }
 
     async list() {
-        const movieList = await models.Movie.findAll( { include: ['category', 'director'] });
+        const movieList = await models.Movie.findAll( { include: ['director'] });
         return movieList;
     }
 
@@ -27,7 +27,7 @@ class MovieService {
 
     async findOne(id) {
         const movie = await models.Movie.findByPk(id, {
-            include: ['category', 'director', 'reviews', 'actors']
+            include: ['director', 'reviews', 'actors', 'categories']
         });
         if(!movie){
             throw new boom.notFound('Movie not Found');

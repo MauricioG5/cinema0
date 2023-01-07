@@ -18,11 +18,14 @@ const CategorySchema = {
 
 class Category extends Model{
     static associate(models) {
-        this.hasMany(models.Movie, {
-            as: 'movies',
-            foreignKey: 'categoryId'
-        })
+        this.belongsToMany(models.Movie, {
+            as:'movies',
+            through: models.MovieCategory,
+            foreignKey: 'categoryId',
+            otherKey: 'movieId'
+        });
     };
+
     static config(sequelize) {
        return {
             sequelize,

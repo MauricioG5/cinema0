@@ -35,17 +35,6 @@ const MovieSchema = {
         type: DataTypes.TEXT,
         allowNull: true,
     },
-    categoryId: {
-        allowNull: true,
-        type: DataTypes.INTEGER,
-        field: 'category_id',
-        references: {
-            model: CATEGORY_TABLE,
-            key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL'
-    },
     directorId: {
         allowNull: true,
         type: DataTypes.INTEGER,
@@ -61,7 +50,6 @@ const MovieSchema = {
 
 class Movie extends Model {
     static associate(models) {
-        this.belongsTo(models.Category, {as: 'category'});
         this.belongsTo(models.Director, {as: 'director'});
         this.hasMany(models.Review, { 
             as: 'reviews',
@@ -73,7 +61,14 @@ class Movie extends Model {
             foreignKey: 'movieId',
             otherKey: 'actorId'
         });
+        this.belongsToMany(models.Category, {
+            as: 'categories',
+            through: models.MovieCategory,
+            foreignKey: 'movieId',
+            otherKey: 'categoryId'
+        });
     };
+
     static config(sequelize) {
         return {
             sequelize,

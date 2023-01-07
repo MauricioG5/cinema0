@@ -5,7 +5,6 @@ const name = Joi.string();
 const img = Joi.string().uri();
 const minAge = Joi.number().min(12).max(18);
 const releaseYear = Joi.number().integer().min(1895).max(2022);
-const categoryId = Joi.number().integer().min(0);
 const directorId = Joi.number().integer().min(0);
 const sinopsis = Joi.string().min(30).max(500);
 const movieId = Joi.number().integer();
@@ -17,7 +16,6 @@ const createMovieSchema = Joi.object({
     img: img.required(),
     releaseYear: releaseYear.required(),
     minAge,
-    categoryId,
     directorId,
     sinopsis
 });
@@ -31,7 +29,6 @@ const updateMovieSchema = Joi.object({
     img,
     minAge,
     releaseYear,
-    categoryId,
     directorId,
     sinopsis
 });

@@ -1,6 +1,6 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
-const { createCategorySchema, getCategorySchema, updateCategorySchema } = require('../schemas/category.schema')
+const { createCategorySchema, getCategorySchema, updateCategorySchema, addMovieSchema } = require('../schemas/category.schema')
 const CategoryService = require('../services/categories.service');
 
 const router = express.Router();
@@ -15,6 +15,30 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+router.post('/add-movie',
+    validationHandler(addMovieSchema, 'body'),
+    async (req, res, next) => {
+        const data = req.body;
+        try {
+            const rta = await service.addMovie(data);
+            res.status(201).json(rta);
+        } catch (e) {
+            next(e);
+        }
+    }); 
+
+router.delete('/remove-movie',
+    validationHandler(addMovieSchema, 'body'),
+    async (req, res, next) => {
+        const data = req.body;
+        try {
+            const rta = await service.removeMovie(data);
+            res.status(200).json(rta);
+        } catch (e) {
+            next(e);
+        }
+    });
+
 router.post('/',
     validationHandler(createCategorySchema, 'body'),
     async (req, res, next) => {
@@ -27,7 +51,7 @@ router.post('/',
         }
     }); 
 
-    router.patch('/:id',
+router.patch('/:id',
     validationHandler(getCategorySchema, 'params'),
     validationHandler(updateCategorySchema, 'body'),
     async (req, res, next) => {
@@ -52,6 +76,7 @@ router.delete('/:id',
             next(e);
         }
     });
+
 router.get('/:id',
     validationHandler(getCategorySchema, 'params'),
     async (req, res, next) => {

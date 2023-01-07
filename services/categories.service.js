@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
+const { Op } = require('sequelize');
 
 
 class CategoryService {
@@ -39,6 +40,22 @@ class CategoryService {
         const category = await this.findOne(id);
         category.destroy();
         return id;
+    }
+
+    async addMovie(data){
+        const movieCategory = models.MovieCategory.create(data);
+        return movieCategory;
+    }
+
+    async removeMovie(data){
+        const movieId = data.movieId;
+        const categoryId = data.categoryId;
+        const rta = await models.MovieCategory.destroy({
+            where: {[Op.and]: [
+                {movieId: movieId},
+                {categoryId: categoryId}
+        ]}});
+        return rta;
     }
 
 }

@@ -8,6 +8,7 @@ const { Review, ReviewSchema, REVIEW_TABLE } = require("../models/review.model")
 const { Director, DirectorSchema, DIRECTOR_TABLE } = require("../models/director.model");
 const { Actor, ActorSchema, ACTOR_TABLE } = require("../models/actor.model");
 const { Distribution, DistributionSchema, DISTRIBUTION_TABLE } = require("../models/distribution.model");
+const { MovieCategory, MovieCategorySchema, MOVIE_CATEGORY_TABLE} = require("../models/movie-category.model");
 
 module.exports = {
   async up (queryInterface) {
@@ -16,6 +17,7 @@ module.exports = {
     await queryInterface.createTable(DIRECTOR_TABLE, DirectorSchema);
     await queryInterface.createTable(MOVIE_TABLE, MovieSchema);
     await queryInterface.createTable(DISTRIBUTION_TABLE, DistributionSchema);
+    await queryInterface.createTable(MOVIE_CATEGORY_TABLE, MovieCategorySchema);
     await queryInterface.createTable(USER_TABLE,  {
       id:{
         primaryKey: true,
@@ -45,6 +47,7 @@ module.exports = {
   },
 
   async down (queryInterface) {
+    await queryInterface.dropTable(MOVIE_CATEGORY_TABLE);
     await queryInterface.dropTable(DISTRIBUTION_TABLE);
     await queryInterface.dropTable(REVIEW_TABLE);
     await queryInterface.dropTable(ACTOR_TABLE);
