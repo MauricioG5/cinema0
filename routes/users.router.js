@@ -1,19 +1,22 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
-const { createUserSchema, getUserSchema, updateUserSchema } = require('../schemas/user.schema')
+const { createUserSchema, getUserSchema, updateUserSchema, queryUserSchema } = require('../schemas/user.schema')
 const UserService = require('../services/users.service')
 
 const router = express.Router();
 const service = new UserService();
 
-router.get('/', async (req, res, next) => {
-    try {
-        const list = await service.list();
-        res.status(200).json(list)
-    } catch (e) {
-        next(e);
-    }
-});
+router.get('/',
+    validationHandler(queryUserSchema, 'query'),
+    async (req, res, next) => {
+        const query = req.query;
+        try {
+            const list = await service.list(query);
+            res.status(200).json(list)
+        } catch (e) {
+            next(e);
+        }
+    });
 
 router.post('/',
     validationHandler(createUserSchema, 'body'),
@@ -25,9 +28,9 @@ router.post('/',
         } catch (e) {
             next(e);
         }
-    }); 
+    });
 
-    router.patch('/:id',
+router.patch('/:id',
     validationHandler(getUserSchema, 'params'),
     validationHandler(updateUserSchema, 'body'),
     async (req, res, next) => {

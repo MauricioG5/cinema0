@@ -6,8 +6,12 @@ class ActorService {
 
     constructor() { }
 
-    async list() {
-        const rta = await models.Actor.findAll();
+    async list(query) {
+        const options = {
+            limit: query?.limit ?? 2,
+            offset: query?.offset ?? 0
+        }
+        const rta = await models.Actor.findAll(options);
         return rta;
     }
 

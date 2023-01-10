@@ -8,8 +8,13 @@ class MovieService {
 
     }
 
-    async list() {
-        const movieList = await models.Movie.findAll( { include: ['director'] });
+    async list(query) {
+        const options = {
+            include: ['director'] ,
+            limit: query?.limit ?? 2,
+            offset: query?.offset ?? 0,
+            }
+        const movieList = await models.Movie.findAll(options);
         return movieList;
     }
 

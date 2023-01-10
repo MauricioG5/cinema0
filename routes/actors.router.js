@@ -1,14 +1,17 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
-const { createActorSchema, updateActorSchema, getActorSchema} = require('../schemas/actor.schema')
+const { createActorSchema, updateActorSchema, getActorSchema, queryActorSchema } = require('../schemas/actor.schema')
 const ActorService = require('../services/actors.service')
 
 const router = express.Router();
 const service = new ActorService();
 
-router.get('/', async (req, res, next) => {
+router.get('/',
+validationHandler(queryActorSchema, 'query'),
+ async (req, res, next) => {
+    const query = req.query;
     try {
-        const list = await service.list();
+        const list = await service.list(query);
         res.status(200).json(list)
     } catch (e) {
         next(e);

@@ -5,8 +5,12 @@ class ReviewService {
 
     constructor(){}
 
-    async list(){
-        const list = await models.Review.findAll();
+    async list(query){
+        const options = {
+            limit: query?.limit ?? 2,
+            offset: query?.offset ?? 0,
+            }
+        const list = await models.Review.findAll(options);
         return list;
     }
 

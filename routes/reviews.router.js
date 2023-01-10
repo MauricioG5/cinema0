@@ -1,14 +1,17 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
-const { createReviewSchema, getReviewSchema, updateReviewSchema } = require('../schemas/review.schema')
+const { createReviewSchema, getReviewSchema, updateReviewSchema, queryReviewSchema } = require('../schemas/review.schema')
 const ReviewService = require('../services/reviews.service')
 
 const router = express.Router();
 const service = new ReviewService();
 
-router.get('/', async (req, res, next) => {
+router.get('/',
+validationHandler(queryReviewSchema, 'query'),
+async (req, res, next) => {
+    const query = req.query;
     try {
-        const list = await service.list();
+        const list = await service.list(query);
         res.status(200).json(list)
     } catch (e) {
         next(e);

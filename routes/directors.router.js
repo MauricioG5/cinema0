@@ -1,19 +1,22 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
-const { createDirectorSchema, getDirectorSchema, updateDirectorSchema } = require('../schemas/director.schema')
+const { createDirectorSchema, getDirectorSchema, updateDirectorSchema, queryDirectorSchema } = require('../schemas/director.schema')
 const DirectorService = require('../services/directors.service')
 
 const router = express.Router();
 const service = new DirectorService();
 
-router.get('/', async (req, res, next) => {
-    try {
-        const list = await service.list();
-        res.status(200).json(list)
-    } catch (e) {
-        next(e);
-    }
-});
+router.get('/',
+    validationHandler(queryDirectorSchema, 'query'),
+    async (req, res, next) => {
+        const query = req.query;
+        try {
+            const list = await service.list(query);
+            res.status(200).json(list)
+        } catch (e) {
+            next(e);
+        }
+    });
 
 router.post('/',
     validationHandler(createDirectorSchema, 'body'),
@@ -25,9 +28,9 @@ router.post('/',
         } catch (e) {
             next(e);
         }
-    }); 
+    });
 
-    router.patch('/:id',
+router.patch('/:id',
     validationHandler(getDirectorSchema, 'params'),
     validationHandler(updateDirectorSchema, 'body'),
     async (req, res, next) => {

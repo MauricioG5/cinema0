@@ -1,19 +1,22 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
-const { createCategorySchema, getCategorySchema, updateCategorySchema, addMovieSchema } = require('../schemas/category.schema')
+const { createCategorySchema, getCategorySchema, updateCategorySchema, addMovieSchema, queryCategorySchema } = require('../schemas/category.schema')
 const CategoryService = require('../services/categories.service');
 
 const router = express.Router();
 const service = new CategoryService();
 
-router.get('/', async (req, res, next) => {
-    try {
-        const list = await service.list();
-        res.status(200).json(list)
-    } catch (e) {
-        next(e);
-    }
-});
+router.get('/',
+    validationHandler(queryCategorySchema, 'query'),
+    async (req, res, next) => {
+        const query = req.query;
+        try {
+            const list = await service.list(query);
+            res.status(200).json(list)
+        } catch (e) {
+            next(e);
+        }
+    });
 
 router.post('/add-movie',
     validationHandler(addMovieSchema, 'body'),
@@ -25,7 +28,7 @@ router.post('/add-movie',
         } catch (e) {
             next(e);
         }
-    }); 
+    });
 
 router.delete('/remove-movie',
     validationHandler(addMovieSchema, 'body'),
@@ -49,7 +52,7 @@ router.post('/',
         } catch (e) {
             next(e);
         }
-    }); 
+    });
 
 router.patch('/:id',
     validationHandler(getCategorySchema, 'params'),

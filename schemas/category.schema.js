@@ -4,6 +4,8 @@ const id = Joi.number().integer();
 const categoryId = Joi.number().integer();
 const movieId = Joi.number().integer();
 const name = Joi.string();
+const limit = Joi.number().integer();
+const offset = Joi.number().integer();
 
 const createCategorySchema = Joi.object({
     name: name.required(),
@@ -22,4 +24,9 @@ const addMovieSchema = Joi.object({
     movieId: movieId.required()
 });
 
-module.exports = { createCategorySchema, getCategorySchema, updateCategorySchema, addMovieSchema }
+const queryCategorySchema = Joi.object({
+    offset,
+    limit
+});
+
+module.exports = { createCategorySchema, getCategorySchema, updateCategorySchema, addMovieSchema, queryCategorySchema }

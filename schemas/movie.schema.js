@@ -10,6 +10,8 @@ const sinopsis = Joi.string().min(30).max(500);
 const movieId = Joi.number().integer();
 const actorId = Joi.number().integer();
 const characterName = Joi.string().min(3).max(25);
+const limit = Joi.number().integer();
+const offset = Joi.number().integer();
 
 const createMovieSchema = Joi.object({
     name: name.required(),
@@ -44,5 +46,10 @@ const removeActorSchema = Joi.object({
     characterName: characterName
 });
 
+const queryMovieSchema = Joi.object({
+    limit,
+    offset
+});
 
-module.exports = { createMovieSchema, getMovieSchema, updateMovieSchema, addActorSchema, removeActorSchema }
+
+module.exports = { createMovieSchema, getMovieSchema, updateMovieSchema, addActorSchema, removeActorSchema, queryMovieSchema }

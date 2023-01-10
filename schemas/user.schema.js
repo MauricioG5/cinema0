@@ -6,6 +6,8 @@ const email = Joi.string().email();
 const password = Joi.string();
 const role = Joi.string();
 const img = Joi.string().uri();
+const limit = Joi.number().integer();
+const offset = Joi.number().integer();
 
 const createUserSchema = Joi.object({
     name: name.required(),
@@ -27,5 +29,10 @@ const updateUserSchema = Joi.object({
     img
 });
 
+const queryUserSchema = Joi.object({
+    limit,
+    offset
+});
 
-module.exports = { createUserSchema, getUserSchema, updateUserSchema }
+
+module.exports = { createUserSchema, getUserSchema, updateUserSchema, queryUserSchema }

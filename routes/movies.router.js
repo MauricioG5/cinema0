@@ -1,14 +1,16 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
-const { createMovieSchema, getMovieSchema, updateMovieSchema, addActorSchema, removeActorSchema } = require('../schemas/movie.schema')
+const { createMovieSchema, getMovieSchema, updateMovieSchema, addActorSchema, removeActorSchema, queryMovieSchema } = require('../schemas/movie.schema')
 const MovieService = require('../services/movies.service')
 
 const router = express.Router();
 const service = new MovieService();
 
-router.get('/', async (req, res, next) => {
+router.get('/',
+ validationHandler(queryMovieSchema, 'query'),
+ async (req, res, next) => {
     try {
-        const list = await service.list();
+        const list = await service.list(req.query);
         res.status(200).json(list)
     } catch (e) {
         next(e);

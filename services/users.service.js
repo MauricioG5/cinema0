@@ -6,8 +6,12 @@ class UserService {
 
     constructor() { }
 
-    async list() {
-        const rta = await models.User.findAll();
+    async list(query) {
+        const options = {
+            limit: query?.limit ?? 2,
+            offset: query?.offset ?? 0,
+            }
+        const rta = await models.User.findAll(options);
         return rta;
     }
 

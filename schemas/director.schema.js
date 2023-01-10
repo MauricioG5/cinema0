@@ -4,6 +4,8 @@ const id = Joi.number().integer();
 const name = Joi.string().min(3).max(15);
 const lastName = Joi.string().min(2).max(15);
 const photo = Joi.string().uri();
+const limit = Joi.number().integer();
+const offset = Joi.number().integer();
 
 const createDirectorSchema = Joi.object({
     name: name.required(),
@@ -21,5 +23,10 @@ const updateDirectorSchema = Joi.object({
     photo
 });
 
+const queryDirectorSchema = Joi.object({
+    limit,
+    offset
+});
 
-module.exports = { createDirectorSchema, getDirectorSchema, updateDirectorSchema }
+
+module.exports = { createDirectorSchema, getDirectorSchema, updateDirectorSchema, queryDirectorSchema }

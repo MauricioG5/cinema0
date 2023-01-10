@@ -5,6 +5,8 @@ const userId = Joi.number().integer();
 const movieId = Joi.number().integer();
 const score = Joi.number().integer();
 const review = Joi.string();
+const offset = Joi.number().integer();
+const limit = Joi.number().integer();
 
 const createReviewSchema = Joi.object({
     userId: userId.required(),
@@ -24,5 +26,9 @@ const updateReviewSchema = Joi.object({
     review
 });
 
+const queryReviewSchema = Joi.object({
+    limit,
+    offset
+});
 
-module.exports = { createReviewSchema, getReviewSchema, updateReviewSchema }
+module.exports = { createReviewSchema, getReviewSchema, updateReviewSchema, queryReviewSchema }

@@ -6,8 +6,12 @@ class DirectorService {
 
     constructor() { }
 
-    async list() {
-        const rta = await models.Director.findAll();
+    async list(query) {
+        const options = {
+            limit: query?.limit ?? 2,
+            offset: query?.offset ?? 0,
+            }
+        const rta = await models.Director.findAll(options);
         return rta;
     }
 

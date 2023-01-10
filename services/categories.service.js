@@ -9,8 +9,12 @@ class CategoryService {
 
     }
 
-    async list() {
-        const categoryList = await models.Category.findAll();
+    async list(query) {
+        const options = {
+            limit: query?.limit ?? 2,
+            offset: query?.offset ?? 0    
+        }
+        const categoryList = await models.Category.findAll(options);
         return categoryList;
     }
 
