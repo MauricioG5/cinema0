@@ -69,6 +69,7 @@ class UserService {
             where: { name: 'root' },
             defaults: {
                 name: 'root',
+                role: 'admin',
                 password: config.rootPassword,
                 email: config.mailSender
             }
