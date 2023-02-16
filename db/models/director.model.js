@@ -1,6 +1,6 @@
 const { DataTypes, Model, Sequelize } = require('sequelize');
 
-DIRECTOR_TABLE = 'directors';
+const DIRECTOR_TABLE = 'directors';
 
 const DirectorSchema = {
     id:{

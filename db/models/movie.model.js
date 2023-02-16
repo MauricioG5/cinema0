@@ -1,5 +1,5 @@
 const { DataTypes, Model, Sequelize } = require('sequelize');
-const { CATEGORY_TABLE } = require('./category.model');
+const { GENRE_TABLE } = require('./genre.model');
 const { DIRECTOR_TABLE } = require('./director.model');
 
 const MOVIE_TABLE = 'movies';
@@ -61,11 +61,11 @@ class Movie extends Model {
             foreignKey: 'movieId',
             otherKey: 'actorId'
         });
-        this.belongsToMany(models.Category, {
-            as: 'categories',
-            through: models.MovieCategory,
+        this.belongsToMany(models.Genre, {
+            as: 'genres',
+            through: models.MovieGenre,
             foreignKey: 'movieId',
-            otherKey: 'categoryId'
+            otherKey: 'genreId'
         });
     };
 

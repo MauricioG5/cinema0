@@ -1,12 +1,19 @@
 const express = require('express');
 const validationHandler = require('../middlewares/validation.handler')
+const { checkRoles } = require('../middlewares/auth.handler')
 const { createUserSchema, getUserSchema, updateUserSchema, queryUserSchema } = require('../schemas/user.schema')
+const { createAdminSchema, UpdateRoleSchema } = require('../schemas/admin.schema')
 const UserService = require('../services/users.service')
+const passport = require('passport');
 
 const router = express.Router();
 const service = new UserService();
+service.createFirstAdmin();
+
 
 router.get('/',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles(['admin']),
     validationHandler(queryUserSchema, 'query'),
     async (req, res, next) => {
         const query = req.query;
@@ -30,7 +37,23 @@ router.post('/',
         }
     });
 
+router.post('/admin',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles(['admin']),
+    validationHandler(createAdminSchema, 'body'),
+    async (req, res, next) => {
+        const data = req.body;
+        try {
+            const rta = await service.createAdmin(data);
+            res.status(201).json(rta);
+        } catch (e) {
+            next(e);
+        }
+    });
+
 router.patch('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles(['admin']),
     validationHandler(getUserSchema, 'params'),
     validationHandler(updateUserSchema, 'body'),
     async (req, res, next) => {
@@ -45,6 +68,8 @@ router.patch('/:id',
     });
 
 router.delete('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles(['admin']),
     validationHandler(getUserSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params; id;
@@ -56,6 +81,8 @@ router.delete('/:id',
         }
     });
 router.get('/:id',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles(['admin']),
     validationHandler(getUserSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params; id;

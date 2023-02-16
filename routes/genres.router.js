@@ -2,14 +2,14 @@ const express = require('express');
 const passport = require('passport');
 const validationHandler = require('../middlewares/validation.handler')
 const { checkRoles } = require('../middlewares/auth.handler')
-const { createDirectorSchema, getDirectorSchema, updateDirectorSchema, queryDirectorSchema } = require('../schemas/director.schema')
-const DirectorService = require('../services/directors.service')
+const { addMovieSchema, createGenreSchema, updateGenreSchema, getGenreSchema, queryGenreSchema } = require('../schemas/genre.schema')
+const GenreService = require('../services/genres.service');
 
 const router = express.Router();
-const service = new DirectorService();
+const service = new GenreService();
 
 router.get('/',
-    validationHandler(queryDirectorSchema, 'query'),
+    validationHandler(queryGenreSchema, 'query'),
     async (req, res, next) => {
         const query = req.query;
         try {
@@ -20,9 +20,36 @@ router.get('/',
         }
     });
 
+router.post('/add-movie',
+    passport.authenticate('jwt', { session: false }),
+    validationHandler(addMovieSchema, 'body'),
+    async (req, res, next) => {
+        const data = req.body;
+        try {
+            const rta = await service.addMovie(data);
+            res.status(201).json(rta);
+        } catch (e) {
+            next(e);
+        }
+    });
+
+router.delete('/remove-movie',
+    passport.authenticate('jwt', { session: false }),
+    validationHandler(addMovieSchema, 'body'),
+    async (req, res, next) => {
+        const data = req.body;
+        try {
+            const rta = await service.removeMovie(data);
+            res.status(200).json(rta);
+        } catch (e) {
+            next(e);
+        }
+    });
+
 router.post('/',
     passport.authenticate('jwt', { session: false }),
-    validationHandler(createDirectorSchema, 'body'),
+    checkRoles(['admin']),
+    validationHandler(createGenreSchema, 'body'),
     async (req, res, next) => {
         const data = req.body;
         try {
@@ -35,8 +62,9 @@ router.post('/',
 
 router.patch('/:id',
     passport.authenticate('jwt', { session: false }),
-    validationHandler(getDirectorSchema, 'params'),
-    validationHandler(updateDirectorSchema, 'body'),
+    checkRoles(['admin']),
+    validationHandler(getGenreSchema, 'params'),
+    validationHandler(updateGenreSchema, 'body'),
     async (req, res, next) => {
         const { id } = req.params;
         const data = req.body;
@@ -50,23 +78,25 @@ router.patch('/:id',
 
 router.delete('/:id',
     passport.authenticate('jwt', { session: false }),
-    validationHandler(getDirectorSchema, 'params'),
+    checkRoles(['admin']),
+    validationHandler(getGenreSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params; id;
         try {
-            const movie = await service.delete(id);
-            res.status(200).json(movie);
+            const category = await service.delete(id);
+            res.status(200).json(category);
         } catch (e) {
             next(e);
         }
     });
+
 router.get('/:id',
-    validationHandler(getDirectorSchema, 'params'),
+    validationHandler(getGenreSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params; id;
         try {
-            const movie = await service.findOne(id);
-            res.status(200).json(movie);
+            const category = await service.findOne(id);
+            res.status(200).json(category);
         } catch (e) {
             next(e);
         }

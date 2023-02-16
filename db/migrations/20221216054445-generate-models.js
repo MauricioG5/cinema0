@@ -2,22 +2,22 @@
 
 const { DataTypes } = require('sequelize');
 const { Movie, MovieSchema, MOVIE_TABLE } = require('../models/movie.model');
-const { Category, CategorySchema, CATEGORY_TABLE } = require('../models/category.model');
+const { Genre, GenreSchema, GENRE_TABLE } = require('../models/genre.model');
 const { User, UserSchema, USER_TABLE } = require('../models/user.model');
 const { Review, ReviewSchema, REVIEW_TABLE } = require("../models/review.model");
 const { Director, DirectorSchema, DIRECTOR_TABLE } = require("../models/director.model");
 const { Actor, ActorSchema, ACTOR_TABLE } = require("../models/actor.model");
 const { Distribution, DistributionSchema, DISTRIBUTION_TABLE } = require("../models/distribution.model");
-const { MovieCategory, MovieCategorySchema, MOVIE_CATEGORY_TABLE} = require("../models/movie-category.model");
+const { MovieGenre, MovieGenreSchema, MOVIE_GENRE_TABLE} = require("../models/movie-genre.model");
 
 module.exports = {
   async up (queryInterface) {
-    await queryInterface.createTable(CATEGORY_TABLE, CategorySchema);
+    await queryInterface.createTable(GENRE_TABLE, GenreSchema);
     await queryInterface.createTable(ACTOR_TABLE, ActorSchema);
     await queryInterface.createTable(DIRECTOR_TABLE, DirectorSchema);
     await queryInterface.createTable(MOVIE_TABLE, MovieSchema);
     await queryInterface.createTable(DISTRIBUTION_TABLE, DistributionSchema);
-    await queryInterface.createTable(MOVIE_CATEGORY_TABLE, MovieCategorySchema);
+    await queryInterface.createTable(MOVIE_GENRE_TABLE, MovieGenreSchema);
     await queryInterface.createTable(USER_TABLE,  {
       id:{
         primaryKey: true,
@@ -38,6 +38,11 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false
       },
+      recoveryToken: {
+        field: 'recovery_token',
+        allowNull: true,
+        type: DataTypes.STRING
+    },
       img: {
         type: DataTypes.STRING,
         allowNull: true
@@ -47,13 +52,13 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    await queryInterface.dropTable(MOVIE_CATEGORY_TABLE);
+    await queryInterface.dropTable(MOVIE_GENRE_TABLE);
     await queryInterface.dropTable(DISTRIBUTION_TABLE);
     await queryInterface.dropTable(REVIEW_TABLE);
     await queryInterface.dropTable(ACTOR_TABLE);
     await queryInterface.dropTable(MOVIE_TABLE);
     await queryInterface.dropTable(USER_TABLE);
-    await queryInterface.dropTable(CATEGORY_TABLE);
+    await queryInterface.dropTable(GENRE_TABLE);
     await queryInterface.dropTable(DIRECTOR_TABLE);
   }
 };

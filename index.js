@@ -1,13 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 const { config } = require('./config/config')
-const mainRouter = require('./routes/index');
 const { errorLogger, boomErrorHandler, errorHandler, ormErrorHandler } = require('./middlewares/error.handler');
-const json = express.json();
+const mainRouter = require('./routes/index');
 
 const port = config.port;
 const app = express();
-app.use(json)
+
 const whiteList = ['http://localhost:8080', 'https://myapp.co'];
 const options = {
     origin: (origin, callback) => {
@@ -19,9 +19,13 @@ const options = {
     }
 }
 
+const json = express.json();
+app.use(json);
+app.use(helmet());
 app.use(cors(options));
+require('./utils/auth');
 
-console.log('Starting my cinema')
+console.log('Starting my cinema');
 mainRouter(app);
 
 app.use(errorLogger);
@@ -30,5 +34,5 @@ app.use(boomErrorHandler);
 app.use(errorHandler);
 
 app.listen(port, () => {
-    console.log('Server running on port ' + port)
+    console.log('Server running on port ' + port);
 })

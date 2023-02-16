@@ -1,34 +1,41 @@
 {
-  "name": "cinema0",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
-    "lint": "eslint",
-    "migrations:generate": "sequelize-cli migration:generate --name",
-    "migrations:run": "sequelize-cli db:migrate",
-    "migrations:revert": "sequelize-cli db:migrate:undo",
-    "migrations:format": "sequelize-cli db:migrate:undo:all"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "eslint": "^8.23.0",
-    "prettier": "^2.7.1"
-  },
-  "dependencies": {
-    "@hapi/boom": "^10.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.2",
-    "express": "^4.18.1",
-    "joi": "^17.6.0",
-    "nodemon": "^2.0.19",
-    "pg": "^8.8.0",
-    "pg-hstore": "^2.3.4",
-    "sequelize": "^6.21.4",
-    "sequelize-cli": "^6.4.1"
-  }
+    "name": "cinema0",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon index.js",
+        "start": "node index.js",
+        "lint": "eslint",
+        "migrations:generate": "sequelize-cli migration:generate --name",
+        "migrations:run": "sequelize-cli db:migrate",
+        "migrations:revert": "sequelize-cli db:migrate:undo",
+        "migrations:format": "sequelize-cli db:migrate:undo:all"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^8.23.0",
+        "prettier": "^2.7.1"
+    },
+    "dependencies": {
+        "@hapi/boom": "^10.0.0",
+        "bcrypt": "^5.1.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.2",
+        "express": "^4.18.1",
+        "helmet": "^6.0.1",
+        "joi": "^17.6.0",
+        "jsonwebtoken": "^9.0.0",
+        "nodemailer": "^6.9.1",
+        "nodemon": "^2.0.19",
+        "passport": "^0.6.0",
+        "passport-jwt": "^4.0.1",
+        "passport-local": "^1.0.0",
+        "pg": "^8.8.0",
+        "pg-hstore": "^2.3.4",
+        "sequelize": "^6.21.4",
+        "sequelize-cli": "^6.4.1"
+    }
 }

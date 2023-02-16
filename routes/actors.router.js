@@ -1,5 +1,7 @@
 const express = require('express');
+const passport = require('passport');
 const validationHandler = require('../middlewares/validation.handler')
+const { checkRoles } = require('../middlewares/auth.handler')
 const { createActorSchema, updateActorSchema, getActorSchema, queryActorSchema } = require('../schemas/actor.schema')
 const ActorService = require('../services/actors.service')
 
@@ -7,18 +9,19 @@ const router = express.Router();
 const service = new ActorService();
 
 router.get('/',
-validationHandler(queryActorSchema, 'query'),
- async (req, res, next) => {
-    const query = req.query;
-    try {
-        const list = await service.list(query);
-        res.status(200).json(list)
-    } catch (e) {
-        next(e);
-    }
-});
+    validationHandler(queryActorSchema, 'query'),
+    async (req, res, next) => {
+        const query = req.query;
+        try {
+            const list = await service.list(query);
+            res.status(200).json(list)
+        } catch (e) {
+            next(e);
+        }
+    });
 
 router.post('/',
+    passport.authenticate('jwt', { session: false }),
     validationHandler(createActorSchema, 'body'),
     async (req, res, next) => {
         const data = req.body;
@@ -28,9 +31,10 @@ router.post('/',
         } catch (e) {
             next(e);
         }
-    }); 
+    });
 
-    router.patch('/:id',
+router.patch('/:id',
+    passport.authenticate('jwt', { session: false }),
     validationHandler(getActorSchema, 'params'),
     validationHandler(updateActorSchema, 'body'),
     async (req, res, next) => {
@@ -45,6 +49,7 @@ router.post('/',
     });
 
 router.delete('/:id',
+    passport.authenticate('jwt', { session: false }),
     validationHandler(getActorSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params; id;

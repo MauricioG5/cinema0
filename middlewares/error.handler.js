@@ -5,7 +5,8 @@ function errorLogger (error, req, res, next){
 }
 function boomErrorHandler (error, req, res, next){
     if(error.isBoom){
-        res.json( error )
+        const statusCode = error?.output?.statusCode ?? 200;
+        res.status(statusCode).json( error )
     } else{
         next(error);
     }

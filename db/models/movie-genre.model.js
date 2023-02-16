@@ -1,22 +1,22 @@
 const { DataTypes, Model, Sequelize} = require('sequelize');
-const { USER_TABLE } = require("./user.model");
+const { GENRE_TABLE } = require("./genre.model");
 const { MOVIE_TABLE } = require("./movie.model");
 
-const REVIEW_TABLE = 'reviews';
+const MOVIE_GENRE_TABLE = 'movies_genres';
 
-const ReviewSchema = {
+const MovieGenreSchema = {
     id: {
         primaryKey: true,
         autoIncrement: true,
         type: DataTypes.INTEGER,
         unique: true
     },
-    userId: {
+    genreId: {
         type: DataTypes.INTEGER,
-        field: 'user_id',
+        field: 'genre_id',
         allowNull: false,
         references: {
-            model: USER_TABLE,
+            model: GENRE_TABLE,
             key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -32,31 +32,21 @@ const ReviewSchema = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
-        },
-    score: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    review: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
+        }
 }
 
-class Review extends Model {
+class MovieGenre extends Model {
     static associate(models){
-        this.belongsTo(models.User,  { as: 'user' });
-        this.belongsTo(models.Movie, { as: 'movie'});
-    }
+        }
 
     static config(sequelize){
         return {
             sequelize,
-            tableName: REVIEW_TABLE,
-            modelName: 'Review',
+            tableName: MOVIE_GENRE_TABLE,
+            modelName: 'MovieGenre',
             timestamps: false
         }
     }
 }
 
-module.exports = { ReviewSchema, REVIEW_TABLE, Review};
+module.exports = { MovieGenre , MOVIE_GENRE_TABLE, MovieGenreSchema};

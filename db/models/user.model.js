@@ -1,6 +1,6 @@
 const { DataTypes, Model, Sequelize } = require('sequelize');
 
-USER_TABLE = 'users';
+const USER_TABLE = 'users';
 
 const UserSchema = {
     id:{
@@ -30,6 +30,11 @@ const UserSchema = {
     img: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    recoveryToken: {
+        field: 'recovery_token',
+        allowNull: true,
+        type: DataTypes.STRING
     }
 }
 
