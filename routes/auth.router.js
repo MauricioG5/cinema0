@@ -1,16 +1,15 @@
 const express = require('express');
 const passport = require('passport');
-const boom = require('@hapi/boom');
-const jwt = require('jsonwebtoken');
 const { config } = require('./../config/config');
 const AuthService = require('../services/auth.service');
 const validationHandler = require('../middlewares/validation.handler');
-const { passwordRecoverySchema } = require('../schemas/auth.schema');
+const { passwordRecoverySchema, loginSchema, changePasswordSchema } = require('../schemas/auth.schema');
 
 const router = express.Router();
 const service = new AuthService();
-
+ 
 router.post('/login',
+    validationHandler(loginSchema, 'body'),
     passport.authenticate('local', { session: false }),
     async (req, res, next) => {
         try {
@@ -39,6 +38,7 @@ router.post('/recovery',
 });
 
 router.post('/change-password',
+validationHandler(changePasswordSchema, 'body'),
     async (req, res, next) => {
         const { password, token } = req.body
         try {

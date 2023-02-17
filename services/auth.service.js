@@ -39,7 +39,6 @@ class AuthService {
 
     async sendRecovery(email) {
         const user = await userService.findByEmail(email);
-        // console.log(user);
         const payload = { sub: user.id };
         const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '15min' });
         const link = `https://www.myfrontend.com/auth/password-recovery?token=${token}`;
@@ -79,12 +78,9 @@ class AuthService {
         if(!id)
             throw new boom.unauthorized();
         const user = await userService.findOne(id);
-        console.log(user);
         if(user.recoveryToken !== token)
             throw new boom.unauthorized();
-        
-        const hash = await bcrypt.hash(password, 10);
-        const updatedUser = await userService.update(id, {recovery_token: null, password: hash});
+        const updatedUser = await userService.update(id, {recovery_token: null, password: password});
         return updatedUser;
         } catch(err){
             throw boom.unauthorized();

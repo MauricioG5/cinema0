@@ -1,7 +1,8 @@
 const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
 const bcrypt = require('bcrypt');
-const { config } = require('../config/config')
+const { config } = require('../config/config');
+const { raw } = require('express');
 
 class UserService {
 
@@ -65,12 +66,14 @@ class UserService {
     }
 
     async createFirstAdmin() {
+        const rawPassword = config.rootPassword;
+        const hash = await bcrypt.hash(rawPassword, 10);
         const user = await models.User.findOrCreate({
             where: { name: 'root' },
             defaults: {
                 name: 'root',
                 role: 'admin',
-                password: config.rootPassword,
+                password: hash,
                 email: config.mailSender
             }
         });
