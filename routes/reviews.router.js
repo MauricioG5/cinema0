@@ -42,8 +42,9 @@ router.patch('/:id',
     async (req, res, next) => {
         const { id } = req.params;
         const data = req.body;
+        const userId = req.user.id;
         try {
-            const rta = await service.update(id, data);
+            const rta = await service.update(id, userId, data);
             res.status(201).json(rta);
         } catch (e) {
             next(e);

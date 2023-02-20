@@ -20,8 +20,6 @@ const getReviewSchema = Joi.object({
 });
 
 const updateReviewSchema = Joi.object({
-    userId,
-    movieId,
     score,
     review
 });

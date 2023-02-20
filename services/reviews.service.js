@@ -15,7 +15,19 @@ class ReviewService {
     }
 
     async findOne(id){
-        const review = await models.Review.findByPk(id, { include: ['user', 'movie'] });
+        const review = await models.Review.findByPk(id,
+            { include: [ {
+                model: models.User,
+                as: 'user',
+                attributes: ['name', 'email']
+            },
+            {
+                model: models.Movie,
+                as: 'movie',
+                attributes: ['id','name',]
+            }
+        ]});
+
         if(!review){
             throw new boom.notFound('Review not found');
         }
@@ -27,10 +39,12 @@ class ReviewService {
         return newReview;
     }
 
-    async update(id, data){
-        const found = await this.findOne(id);
-        const updated = await found.update(data);
-        return updated;
+    async update(id, userId, data){
+        const foundReview = await this.findOne(id);
+        if(foundReview.userId != userId)
+            throw new boom.unauthorized();
+        const updatedReview = await foundReview.update(data);
+        return updatedReview;
     }
 
     async delete(id){
