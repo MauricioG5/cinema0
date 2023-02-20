@@ -2,7 +2,10 @@ const express = require('express');
 const passport = require('passport');
 const validationHandler = require('../middlewares/validation.handler')
 const { checkRoles } = require('../middlewares/auth.handler')
-const { createMovieSchema, getMovieSchema, updateMovieSchema, addActorSchema, removeActorSchema, queryMovieSchema } = require('../schemas/movie.schema')
+const { createMovieSchema, 
+    getMovieSchema, updateMovieSchema,
+     addActorSchema, removeActorSchema,
+      queryMovieSchema, searchSchema } = require('../schemas/movie.schema')
 
 const MovieService = require('../services/movies.service')
 
@@ -42,6 +45,19 @@ router.post('/add-actor',
             const rta = await service.addActor(data);
             res.status(201).json(rta);
         } catch (e) {
+            next(e);
+        }
+    });
+
+    router.post('/search', 
+    validationHandler(searchSchema, 'body'),
+    async (req, res, next) => {
+        const body = req.body;
+        const searchInput = body?.input;
+        try{
+            const rta = await service.search(searchInput);
+            res.status(200).json(rta);
+        } catch(e) {
             next(e);
         }
     });

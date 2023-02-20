@@ -95,6 +95,17 @@ class UserService {
         await user.destroy();
         return id;
     }
+
+    async search(input) {
+        const options = {
+            where: {
+                [Op.or]: [ {name: input}, {email: input} ]
+            }
+        };
+        const rta = await models.User.findAll(options);
+        return rta;
+    }
+
 }
 
 module.exports = UserService;

@@ -59,13 +59,25 @@ class MovieService {
         ]}});
         return rta;
     }
-
+    
     async delete(id) {
         const movie = await this.findOne(id);
         movie.destroy();
         return id;
     }
-
+    
+    async search(input) {
+        const options = {
+            where: {
+                [Op.or]: [
+                    {name: input},
+                    {releaseYear: input}
+                ]
+            }
+        };
+        const rta = await models.Movie.findAll(options);
+        return rta;
+    }
 }
 
 module.exports = MovieService

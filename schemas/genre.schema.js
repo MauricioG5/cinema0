@@ -4,6 +4,7 @@ const id = Joi.number().integer();
 const categoryId = Joi.number().integer();
 const movieId = Joi.number().integer();
 const name = Joi.string();
+const searchInput = Joi.string();
 const limit = Joi.number().integer();
 const offset = Joi.number().integer();
 
@@ -29,4 +30,11 @@ const queryGenreSchema = Joi.object({
     limit
 });
 
-module.exports = { createGenreSchema, getGenreSchema, updateGenreSchema, addMovieSchema, queryGenreSchema }
+const searchSchema = Joi.object({
+    searchInput: searchInput.required()
+});
+
+module.exports = { 
+    createGenreSchema, getGenreSchema,
+     updateGenreSchema, addMovieSchema,
+      queryGenreSchema, searchSchema }

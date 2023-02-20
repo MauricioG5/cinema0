@@ -2,7 +2,9 @@ const express = require('express');
 const passport = require('passport');
 const validationHandler = require('../middlewares/validation.handler')
 const { checkRoles } = require('../middlewares/auth.handler')
-const { createDirectorSchema, getDirectorSchema, updateDirectorSchema, queryDirectorSchema } = require('../schemas/director.schema')
+const { createDirectorSchema,
+     getDirectorSchema,updateDirectorSchema,
+      queryDirectorSchema, searchSchema } = require('../schemas/director.schema')
 const DirectorService = require('../services/directors.service')
 
 const router = express.Router();
@@ -29,6 +31,19 @@ router.post('/',
             const rta = await service.create(data);
             res.status(201).json(rta);
         } catch (e) {
+            next(e);
+        }
+    });
+
+    router.post('/search', 
+    validationHandler(searchSchema, 'body'),
+    async (req, res, next) => {
+        const body = req.body;
+        const searchInput = body?.input;
+        try{
+            const rta = await service.search(searchInput);
+            res.status(200).json(rta);
+        } catch(e) {
             next(e);
         }
     });

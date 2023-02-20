@@ -65,5 +65,13 @@ class GenreService {
         return rta;
     }
 
+    async search(input) {
+        const options = {
+            where: {name: input}
+        };
+        const rta = await models.Genre.findAll(options);
+        return rta;
+    }
+
 }
 module.exports = GenreService

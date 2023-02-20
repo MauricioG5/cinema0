@@ -4,6 +4,7 @@ const id = Joi.number().integer();
 const name = Joi.string().min(3).max(15);
 const lastName = Joi.string().min(2).max(15);
 const photo = Joi.string().uri();
+const searchInput = Joi.string();
 const offset = Joi.number().integer();
 const limit = Joi.number().integer();
 
@@ -27,5 +28,11 @@ const queryActorSchema = Joi.object({
     limit
 });
 
+const searchSchema = Joi.object({
+    searchInput: searchInput.required()
+});
 
-module.exports = { createActorSchema, getActorSchema, updateActorSchema, queryActorSchema };
+module.exports = { 
+    createActorSchema, getActorSchema,
+     updateActorSchema, queryActorSchema,
+      searchSchema };

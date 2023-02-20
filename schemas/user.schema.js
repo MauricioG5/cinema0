@@ -5,6 +5,7 @@ const name = Joi.string();
 const email = Joi.string().email();
 const password = Joi.string().min(6).max(20);
 const img = Joi.string().uri();
+const searchInput = Joi.string();
 const limit = Joi.number().integer();
 const offset = Joi.number().integer();
 
@@ -32,4 +33,12 @@ const queryUserSchema = Joi.object({
 });
 
 
-module.exports = { createUserSchema, getUserSchema, updateUserSchema, queryUserSchema }
+const searchSchema = Joi.object({
+    searchInput: searchInput.required()
+});
+
+
+module.exports = {
+     createUserSchema, getUserSchema,
+      updateUserSchema, queryUserSchema,
+       searchSchema }

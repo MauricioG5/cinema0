@@ -39,6 +39,16 @@ class DirectorService {
         await director.destroy();
         return id;
     }
+
+    async search(input) {
+        const options = {
+            where: {
+                [Op.or]: [{name: input}, {lastname: input}]
+            }
+        };
+        const rta = await models.Actor.findAll(options);
+        return rta;
+    }
 }
 
 module.exports = DirectorService;
