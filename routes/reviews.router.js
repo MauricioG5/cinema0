@@ -13,8 +13,8 @@ router.get('/',
     async (req, res, next) => {
         const query = req.query;
         try {
-            const list = await service.list(query);
-            res.status(200).json(list)
+            const reviews = await service.list(query);
+            res.status(200).json(reviews)
         } catch (e) {
             next(e);
         }
@@ -27,14 +27,13 @@ router.post('/',
     async (req, res, next) => {
         const data = req.body;
         try {
-            const rta = await service.create(data);
-            res.status(201).json(rta);
+            const review = await service.create(data);
+            res.status(201).json(review);
         } catch (e) {
             next(e);
         }
     });
 
-// Only the owner of a review must be able tu update it
 router.patch('/:id',
     passport.authenticate('jwt', { session: false }),
     validationHandler(getReviewSchema, 'params'),
@@ -44,22 +43,22 @@ router.patch('/:id',
         const data = req.body;
         const userId = req.user.id;
         try {
-            const rta = await service.update(id, userId, data);
-            res.status(201).json(rta);
+            const review = await service.update(id, userId, data);
+            res.status(201).json(review);
         } catch (e) {
             next(e);
         }
     });
 
-// Only the owner of a review must be able tu delete it
 router.delete('/:id',
     passport.authenticate('jwt', { session: false }),
     validationHandler(getReviewSchema, 'params'),
     async (req, res, next) => {
-        const { id } = req.params; id;
+        const { id } = req.params;
+        const userId = req.user.id;
         try {
-            const movie = await service.delete(id);
-            res.status(200).json(movie);
+            const review = await service.delete(id, userId);
+            res.status(200).json(review);
         } catch (e) {
             next(e);
         }
@@ -70,8 +69,8 @@ router.get('/:id',
     async (req, res, next) => {
         const { id } = req.params; id;
         try {
-            const movie = await service.findOne(id);
-            res.status(200).json(movie);
+            const review = await service.findOne(id);
+            res.status(200).json(review);
         } catch (e) {
             next(e);
         }

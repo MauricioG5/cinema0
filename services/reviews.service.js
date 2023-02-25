@@ -47,9 +47,11 @@ class ReviewService {
         return updatedReview;
     }
 
-    async delete(id){
-        const found = await this.findOne(id);
-        await found.destroy();
+    async delete(id, userId){
+        const foundReview = await this.findOne(id);
+        if(foundReview.userId != userId)
+            throw new boom.unauthorized();
+        await foundReview.destroy();
         return id;
     }
 }

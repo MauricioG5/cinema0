@@ -14,7 +14,7 @@ const createReviewSchema = Joi.object({
     score: score.required(),
     review: review.required(),
 });
-
+ 
 const getReviewSchema = Joi.object({
     id: id.required()
 });
