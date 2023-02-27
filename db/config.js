@@ -7,14 +7,14 @@ const port = config.dbPort;
 const dbName = config.dbName;
 
 const URI = `postgres://${user}:${pass}@${host}:${port}/${dbName}`;
-// console.log('Mi URI es '+URI);
+
 module.exports = {
     development: {
       url: URI,
       dialect: 'postgres'
     },
     production: {
-      url: URI,
+      url: config.extProdURL,
       dialect: 'postgres'
     }
   }

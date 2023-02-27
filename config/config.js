@@ -9,6 +9,8 @@ const config = {
     dbPassword: process.env.DB_PASSWORD,
     dbHost: process.env.DB_HOST,
     dbPort: process.env.DB_PORT,
+    prodURL: process.env.PROD_URL,
+    extProdURL: process.env.EXT_PROD_URL,
     apiKey: process.env.API_KEY,
     jwtSecret: process.env.JWT_SECRET,
     mailSender: process.env.MAIL_SENDER,

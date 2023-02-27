@@ -4,7 +4,7 @@ services:
     db:
       image: postgres:13
       environment:
-        - POSTGRES_USER=dbUser
+        - POSTGRES_USER=dbuser
         - POSTGRES_PASSWORD=123
         - POSTGRES_DB=cinema0
       ports:
