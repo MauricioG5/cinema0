@@ -9,12 +9,17 @@ const dbName = config.dbName;
 const URI = `postgres://${user}:${pass}@${host}:${port}/${dbName}`;
 
 module.exports = {
-    development: {
-      url: URI,
-      dialect: 'postgres'
-    },
-    production: {
-      url: config.extProdURL,
-      dialect: 'postgres'
+  development: {
+    url: config.devUrl,
+    dialect: 'postgres'
+  },
+  production: {
+    url: config.prodUrl,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: false
+      }
     }
   }
+}
